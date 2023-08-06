@@ -1,0 +1,32 @@
+---
+title: "RNA-seq Tutorial"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("pasilla")
+
+library("pasilla")
+
+datafile = system.file("extdata/pasilla_gene_counts.tsv", package = "pasilla");
+
+datafile
+rawCountTable = read.table(datafile, header = TRUE, row.names = 1);
+
+head(rawCountTable)
+```
+
+```{r}
+condition = c("control", "control", "control", "control", "treated", "treated", "treated")
+#Rename the first 4 columns
+colnames(rawCountTable)[1:4] = paste0("control", 1:4);
+head(rawCountTable)
+```
+

@@ -28,12 +28,6 @@ all(colnames(counts) == colData$description)
 colnames(counts) <- rownames(colData)
 all(colnames(counts) == rownames(colData))
 ```
-Remove genes those have very low expressed values
-```{r}
-nrow(countsNormalized)
-countsNormalized <- countsNormalized[rowSums(countsNormalized)>2,]
-nrow(countsNormalized)
-```
 Applying CPM Normalization without any library
 ```{r}
 counts <- as.data.frame(counts)
@@ -46,9 +40,19 @@ for(j in 1:ncol(countsNormalized))
     countsNormalized[i,j] = (counts[i,j]/columnSums[j])*1000000
   }
 }
-
 write.csv(countsNormalized,file = "countsNormalizedCPMGSE140809.csv")
+countsNormalized <- read.csv("countsNormalizedCPMGSE140809.csv")
+countsNormalized <- as.data.frame(countsNormalized)
+countsNormalized <- as.matrix(countsNormalized)
+```
+The above cpmNormalization takes longer time. That's why I calculate that ones and 
+store in my directory. If you want to restore the data then following code will help you to do that. It will restore the data, set rownames from firstColumn and remove the first column again and also convert to numeric value for all elements.
 
+Remove genes those have very low expressed values
+```{r}
+nrow(countsNormalized)
+countsNormalized <- countsNormalized[rowSums(countsNormalized)>2,]
+nrow(countsNormalized)
 ```
 Extract all genes those are acute
 ```{r}
