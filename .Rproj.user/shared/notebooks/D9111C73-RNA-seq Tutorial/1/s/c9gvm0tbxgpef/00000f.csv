@@ -1,0 +1,6 @@
+"0","#install.packages(""reshape2"")"
+"0","library(reshape2)"
+"0","df = melt(pseudoCount, variable_name = ""Samples"");"
+"2","No id variables; using all as measure variables
+"
+"0","pseudoCount"

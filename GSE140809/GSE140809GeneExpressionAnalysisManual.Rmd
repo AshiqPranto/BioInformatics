@@ -41,12 +41,15 @@ for(j in 1:ncol(countsNormalized))
   }
 }
 write.csv(countsNormalized,file = "countsNormalizedCPMGSE140809.csv")
-countsNormalized <- read.csv("countsNormalizedCPMGSE140809.csv")
-countsNormalized <- as.data.frame(countsNormalized)
-countsNormalized <- as.matrix(countsNormalized)
 ```
 The above cpmNormalization takes longer time. That's why I calculate that ones and 
 store in my directory. If you want to restore the data then following code will help you to do that. It will restore the data, set rownames from firstColumn and remove the first column again and also convert to numeric value for all elements.
+```{r}
+countsNormalized <- read.csv("countsNormalizedCPMGSE140809.csv")
+rownames(countsNormalized) <- countsNormalized[ ,'X'];
+countsNormalized <- countsNormalized[ ,-1]
+countsNormalized <- as.data.frame(countsNormalized)
+```
 
 Remove genes those have very low expressed values
 ```{r}
@@ -60,10 +63,11 @@ acute.colDataIndex <- grepl("acute",colData$title)
 acute.colDataIndex
 acute.colData <- colData[acute.colDataIndex,]
 nrow(acute.colData)
+
 acute.sampleName <- rownames(acute.colData)
 acute.sampleName
+countsNormalized
 acute.counts <- countsNormalized[,acute.sampleName]
-
 acute.means <- as.data.frame(rowMeans(acute.counts))
 View(acute.means)
 ```
@@ -90,13 +94,15 @@ Filter Out zero count genes
 to.remove <- unique(which(meanCounts==0,arr.ind = TRUE)[,1])
 #to.remove <- as.data.frame(to.remove)
 #to.remove
-meanCountsWithoutZero <- meanCounts[-to.remove,]
+meanCountsWithoutZero <- meanCounts[-to.remove, ]
 nrow(meanCountsWithoutZero)
 ```
 Calculate log2FoldChange, #upgenges and #downges
 ```{r}
+meanCountsWithoutZero
+View(meanCountsWithoutZero)
 log2fc <- log2(meanCountsWithoutZero$rowMeans.acute.counts./meanCountsWithoutZero$rowMeans.convalescent.counts.)
-threShold <- 2
+threShold <- 7
 log2fc <- as.data.frame(log2fc)
 log2fc
 upGenes <- sum(log2fc>threShold)

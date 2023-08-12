@@ -1,0 +1,9 @@
+"0","#install.packages(""reshape2"")"
+"0","library(reshape2)"
+"0","  df = melt(pseudoCount, variable.name = ""Samples"");"
+"2","No id variables; using all as measure variables
+"
+"0","df = data.frame(df, Condition = substr(df$Samples, 1, 7))"
+"0","#str(df)"
+"0","ggplot(df, aes(x = Samples, y = value, fill = Condition)) + geom_boxplot() + xlab("""") +"
+"0","ylab(expression(log[2](count + 1))) + scale_fill_manual(values = c(""#619CFF"", ""#F564E3""))"

@@ -1,0 +1,7 @@
+"0","x = pseudoCount"
+"0","s = rowMeans((x - rowMeans(x))^2)"
+"0","#View(s);"
+"0","o = order(s, decreasing = TRUE)"
+"0","x = x[o, ]"
+"0","x = x[1:ntop+5000, ]"
+"0","x"

@@ -1,0 +1,23 @@
+"0","if (!require(""BiocManager"", quietly = TRUE))"
+"0","    install.packages(""BiocManager"")"
+"2","Bioconductor version 3.14 (BiocManager 1.30.20), R 4.1.2
+  (2021-11-01)
+"
+"2","Bioconductor version '3.14' is out-of-date; the current release
+  version '3.17' is available with R version '4.3'; see
+  https://bioconductor.org/install
+"
+"0","#BiocManager::install(""pasilla"")"
+"0",""
+"0","library(""pasilla"")"
+"0",""
+"0","datafile = system.file(""extdata/pasilla_gene_counts.tsv"", package = ""pasilla"");"
+"0",""
+"0","datafile"
+"1","[1]"
+"1"," ""/home/pranto/R/x86_64-pc-linux-gnu-library/4.1/pasilla/extdata/pasilla_gene_counts.tsv"""
+"1","
+"
+"0","rawCountTable = read.table(datafile, header = TRUE, row.names = 1);"
+"0",""
+"0","head(rawCountTable)"
