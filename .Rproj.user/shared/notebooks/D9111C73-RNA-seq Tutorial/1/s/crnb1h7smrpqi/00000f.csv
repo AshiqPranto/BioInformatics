@@ -1,5 +1,0 @@
-"0","ggplot(df, aes(x = value, colour = Samples, fill = Samples)) + ylim(c(0, 0.25)) +"
-"0","geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +"
-"0","theme(legend.position = ""top"") + xlab(expression(log[2](count + 1)))"
-"2","Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
-Please use `linewidth` instead."

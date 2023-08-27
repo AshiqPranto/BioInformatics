@@ -2,13 +2,16 @@
 title: "RNA-seq Tutorial"
 author: "Pranto"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-```{r}
+
+```{r message=FALSE, warning=FALSE}
 if (!require("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 #BiocManager::install("pasilla")
@@ -21,15 +24,15 @@ rawCountTable = read.table(datafile, header = TRUE, row.names = 1);
 head(rawCountTable);
 
 colDataFile = system.file("extdata/pasilla_sample_annotation.csv", package = "pasilla");
-colDataFile
+colDataFile;
 rawColData = read.csv(colDataFile);
 head(rawColData);
 condition <- rawColData$condition;
 libType <- rawColData$type;
-libType
+libType;
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 condition = c("control", "control", "control", "control", "treated", "treated", "treated")
 libType = c("single-end", "single-end", "paired-end", "paired-end", "single-end",
 "paired-end", "paired-end")
@@ -37,8 +40,8 @@ libType = c("single-end", "single-end", "paired-end", "paired-end", "single-end"
 colnames(rawCountTable)[1:4] = paste0("control", 1:4);
 head(rawCountTable);
 ```
-# Data Transformation
-```{r}
+### Data Transformation
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 
 ggplot(rawCountTable, aes(x = control1)) + geom_histogram(fill = "#525252", binwidth = 2000);
@@ -50,7 +53,7 @@ geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6);
 
 ```
 # BOXPLOTS
-```{r}
+```{r message=FALSE, warning=FALSE}
 #install.packages("reshape2")
 library(reshape2)
   df = melt(pseudoCount, variable.name = "Samples");
@@ -61,13 +64,14 @@ ylab(expression(log[2](count + 1))) + scale_fill_manual(values = c("#619CFF", "#
 ```
 
 # Histogram And Density Plot
-```{r}
+```{r message=FALSE, warning=FALSE}
 ggplot(df, aes(x = value, colour = Samples, fill = Samples)) + ylim(c(0, 0.25)) +
 geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
 theme(legend.position = "top") + xlab(expression(log[2](count + 1)))
 ```
 # MA-plot between Samples
-```{r}
+```{r message=FALSE, warning=FALSE}
+# MA - plot between Sample 1 and 2
 x = pseudoCount[, 1]
 y = pseudoCount[, 2]
 ## M-values
@@ -77,9 +81,66 @@ A = (x + y)/2
 df = data.frame(A, M)
 ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
 geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
+# MA - plot between Sample 1 and 3
+x = pseudoCount[, 1]
+y = pseudoCount[, 3]
+## M-values
+M = x - y
+## A-values
+A = (x + y)/2
+df = data.frame(A, M)
+ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
+geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
+# MA - plot between Sample 1 and 4
+x = pseudoCount[, 1]
+y = pseudoCount[, 4]
+## M-values
+M = x - y
+## A-values
+A = (x + y)/2
+df = data.frame(A, M)
+ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
+geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
+# MA - plot between Sample 1 and 5
+x = pseudoCount[, 1]
+y = pseudoCount[, 5]
+## M-values
+M = x - y
+## A-values
+A = (x + y)/2
+df = data.frame(A, M)
+ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
+geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
+
+# MA - plot between Sample 1 and 6
+x = pseudoCount[, 1]
+y = pseudoCount[, 6]
+## M-values
+M = x - y
+## A-values
+A = (x + y)/2
+df = data.frame(A, M)
+ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
+geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
+# MA - plot between Sample 1 and 7
+x = pseudoCount[, 1]
+y = pseudoCount[, 7]
+## M-values
+M = x - y
+## A-values
+A = (x + y)/2
+df = data.frame(A, M)
+ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) +
+geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3")
+
 ```
 # Clustering Image Map(CIM) - Heatmap
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(RColorBrewer) # this library for the brewer.pal() function
 #BiocManager::install("ComplexHeatmap"); #complexheatmap is not a built in library, thats why we need to install it before use.
 library(ComplexHeatmap); #this library is necessary for heatmap() function
@@ -98,7 +159,7 @@ hmcol = colorRampPalette(brewer.pal(9, "GnBu"))(16);
 heatmap(mat.dist, col = rev(hmcol), margins = c(11, 11))
 ```
 # PCA
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(matrixStats) # this library for rowVars() function
 pseudoCountMatrix = as.matrix(pseudoCount);
 rv = rowVars(pseudoCountMatrix); # calculate variance for each row
@@ -110,7 +171,7 @@ plot(pca$x);
 
 ```
 # Alternative way to plot PCA with plotPCA() function
-```{r}
+```{r message=FALSE, warning=FALSE}
 
 #BiocManager::install("Biobase");
 library(Biobase); #This library for AnnotatedDataFrame function
@@ -131,46 +192,94 @@ plotPCA(DESeqTransform(se),intgroup = c("condition","type"))
 
 ```
 # Multidimensional  scaling plot
-```{r}
-x = pseudoCount
-s = rowMeans((x - rowMeans(x))^2)
+```{r message=FALSE, warning=FALSE}
+x = pseudoCount;
+s = rowMeans((x - rowMeans(x))^2);
 #View(s);
-o = order(s, decreasing = TRUE)
-x = x[o, ]
-x = x[1:ntop+5000, ]
-x
-D <- matrix(0, ncol(x), ncol(x))
-
+o = order(s, decreasing = TRUE);
+x = x[o, ];
+x = x[1:ntop, ];
+D <- matrix(0, ncol(x), ncol(x));
+#str(x)
 for(i in 1 : ncol(x))
 {
   for(j in 1 : ncol(x))
   {
-    D[i, j] <- sqrt(mean((x[, i] - x[, j])^2))
-    
+    tempx = (x[, i] - x[, j])^2;
+    D[i, j] = sqrt(mean(tempx));
   }
 }
-plot(D)
+D = as.data.frame(D)
+plot(D);
+#ggplot(D)
 ```
-```{r}
+```{r message=FALSE, warning=FALSE}
 fac = factor(paste(condition, libType, sep = " : "))
+
 colours = brewer.pal(nlevels(fac), "Paired")
+colours
 library(limma)
 plotMDS(pseudoCount, col = colours[as.numeric(fac)], labels = fac)
 ```
+# Raw data filtering
+```{r message=FALSE, warning=FALSE}
+keep = rowSums(pseudoCount) > 0;
+filterCount = pseudoCount[keep, ];
+dim(rawCountTable)
+dim(filterCount)
+```
+This reduces the dataset to 12359 genes.
+```{r message=FALSE, warning=FALSE}
+df = melt(filterCount, variable.name = "Samples");
+#This is a function from the reshape2 package that is used for converting data from a wide format to a long format, which is often more suitable for various analyses and plotting.
+df = data.frame(df, Condition = substr(df$Samples, 1, 7));
+#View(df)
+ggplot(df, aes(x = value, colour = Samples, fill = Samples)) +
+geom_density(alpha = 0.2, size = 1.25) + facet_wrap(~ Condition) +
+theme(legend.position = "top") + xlab("pseudocounts")
+```
+# Normalization usin CPM() from edgeR package
+```{r message=FALSE, warning=FALSE}
+#BiocManager::install("edgeR")
+library(edgeR)
+cpmPseudoCount <- cpm(pseudoCount)
+#The calcNormFactors() function in the edgeR package is used to calculate normalization factors for count data. The normalization factors adjust for differences in library sizes between samples so that the counts become comparable and suitable for downstream analysis.
+#cpmPseudoCount <- calcNormFactors(pseudoCount, method = "upperquartile", p = 0.75);
+#cpmPseudoCount <- calcNormFactors(pseudoCount, method = "RLE")
+#cpmPseudoCount <- calcNormFactors(pseudoCount, method = "TMM")
+cpmPseudoCount = as.data.frame(cpmPseudoCount)
+View(cpmPseudoCount)
+numOfGene <- 300;
+plotData <- data.frame(
+  GeneName = c(rownames(pseudoCount[1:numOfGene,]), rownames(pseudoCount[1:numOfGene,])),
+  CountValue = c(pseudoCount[1:numOfGene, 1], pseudoCount[1:numOfGene, 2]),
+  #Type = c(rep("Control1", times = nrow(pseudoCount)),rep("Control2", times = nrow(pseudoCount)))
+  Type = c(rep("Control1", times = numOfGene),rep("Control2", times = numOfGene)
+));
 
+#View(plotData);
+scatter_plot <- ggplot(plotData, aes(x = GeneName, y = CountValue, color = Type)) + geom_point() + 
+  labs(x = "Gene", y = "CountsValue", color = "Type") + 
+  ggtitle("Before CPM Normalization");
 
+print(scatter_plot)
 
+#After cpm normalization
+plotData <- data.frame(
+  GeneName = c(rownames(pseudoCount[1:numOfGene,]), rownames(pseudoCount[1:numOfGene,])),
+  CountValue = c(cpmPseudoCount[1:numOfGene, 1], cpmPseudoCount[1:numOfGene, 2]),
+  Type = c(rep("Control1", times = numOfGene),rep("Control2", times = numOfGene))
+)
+scatter_plot <- ggplot(plotData, aes(x = GeneName, y = CountValue, color = Type)) + geom_point() + 
+  labs(x = "Gene", y = "CountsValue", color = "Type") +
+  ggtitle("After CPM Normalization");
 
+print(scatter_plot)
+```
 
+```{r}
 
-
-
-
-
-
-
-
-
+```
 
 
 

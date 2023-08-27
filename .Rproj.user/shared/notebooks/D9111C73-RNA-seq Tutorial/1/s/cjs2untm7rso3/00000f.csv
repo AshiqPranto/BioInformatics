@@ -1,5 +1,0 @@
-"0","library(ggplot2)"
-"2","Need help getting started? Try the R Graphics Cookbook:
-https://r-graphics.org
-"
-"0","ggplot(rawCountTable, aes(x = control1)) + geom_histogram(fill = ""#525252"", binwidth = 2000);"

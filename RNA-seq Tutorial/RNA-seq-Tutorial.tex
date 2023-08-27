@@ -1,0 +1,448 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{lmodern}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={RNA-seq Tutorial},
+  pdfauthor={Pranto},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{RNA-seq Tutorial}
+\author{Pranto}
+\date{2023-08-14}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{require}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{, }\AttributeTok{quietly =} \ConstantTok{TRUE}\NormalTok{))}
+    \FunctionTok{install.packages}\NormalTok{(}\StringTok{"BiocManager"}\NormalTok{)}
+\CommentTok{\#BiocManager::install("pasilla")}
+
+\FunctionTok{library}\NormalTok{(}\StringTok{"pasilla"}\NormalTok{)}
+
+\NormalTok{datafile }\OtherTok{=} \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/pasilla\_gene\_counts.tsv"}\NormalTok{, }\AttributeTok{package =} \StringTok{"pasilla"}\NormalTok{);}
+\NormalTok{datafile;}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/home/pranto/R/x86_64-pc-linux-gnu-library/4.1/pasilla/extdata/pasilla_gene_counts.tsv"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rawCountTable }\OtherTok{=} \FunctionTok{read.table}\NormalTok{(datafile, }\AttributeTok{header =} \ConstantTok{TRUE}\NormalTok{, }\AttributeTok{row.names =} \DecValTok{1}\NormalTok{);}
+\FunctionTok{head}\NormalTok{(rawCountTable);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             untreated1 untreated2 untreated3 untreated4 treated1 treated2
+## FBgn0000003          0          0          0          0        0        0
+## FBgn0000008         92        161         76         70      140       88
+## FBgn0000014          5          1          0          0        4        0
+## FBgn0000015          0          2          1          2        1        0
+## FBgn0000017       4664       8714       3564       3150     6205     3072
+## FBgn0000018        583        761        245        310      722      299
+##             treated3
+## FBgn0000003        1
+## FBgn0000008       70
+## FBgn0000014        0
+## FBgn0000015        0
+## FBgn0000017     3334
+## FBgn0000018      308
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{colDataFile }\OtherTok{=} \FunctionTok{system.file}\NormalTok{(}\StringTok{"extdata/pasilla\_sample\_annotation.csv"}\NormalTok{, }\AttributeTok{package =} \StringTok{"pasilla"}\NormalTok{);}
+\NormalTok{colDataFile}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "/home/pranto/R/x86_64-pc-linux-gnu-library/4.1/pasilla/extdata/pasilla_sample_annotation.csv"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rawColData }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(colDataFile);}
+\FunctionTok{head}\NormalTok{(rawColData);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##           file condition        type number.of.lanes total.number.of.reads
+## 1 untreated1fb untreated single-read               2              17812866
+## 2 untreated2fb untreated single-read               6              34284521
+## 3 untreated3fb untreated  paired-end               2         10542625 (x2)
+## 4 untreated4fb untreated  paired-end               2         12214974 (x2)
+## 5   treated1fb   treated single-read               5              35158667
+## 6   treated2fb   treated  paired-end               2         12242535 (x2)
+##   exon.counts
+## 1    14924838
+## 2    20764558
+## 3    10283129
+## 4    11653031
+## 5    15679615
+## 6    15620018
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{condition }\OtherTok{\textless{}{-}}\NormalTok{ rawColData}\SpecialCharTok{$}\NormalTok{condition;}
+\NormalTok{libType }\OtherTok{\textless{}{-}}\NormalTok{ rawColData}\SpecialCharTok{$}\NormalTok{type;}
+\NormalTok{libType}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "single-read" "single-read" "paired-end"  "paired-end"  "single-read"
+## [6] "paired-end"  "paired-end"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{condition }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"control"}\NormalTok{, }\StringTok{"control"}\NormalTok{, }\StringTok{"control"}\NormalTok{, }\StringTok{"control"}\NormalTok{, }\StringTok{"treated"}\NormalTok{, }\StringTok{"treated"}\NormalTok{, }\StringTok{"treated"}\NormalTok{)}
+\NormalTok{libType }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\StringTok{"single{-}end"}\NormalTok{, }\StringTok{"single{-}end"}\NormalTok{, }\StringTok{"paired{-}end"}\NormalTok{, }\StringTok{"paired{-}end"}\NormalTok{, }\StringTok{"single{-}end"}\NormalTok{,}
+\StringTok{"paired{-}end"}\NormalTok{, }\StringTok{"paired{-}end"}\NormalTok{)}
+\CommentTok{\#Rename the first 4 columns}
+\FunctionTok{colnames}\NormalTok{(rawCountTable)[}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{] }\OtherTok{=} \FunctionTok{paste0}\NormalTok{(}\StringTok{"control"}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{);}
+\FunctionTok{head}\NormalTok{(rawCountTable);}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             control1 control2 control3 control4 treated1 treated2 treated3
+## FBgn0000003        0        0        0        0        0        0        1
+## FBgn0000008       92      161       76       70      140       88       70
+## FBgn0000014        5        1        0        0        4        0        0
+## FBgn0000015        0        2        1        2        1        0        0
+## FBgn0000017     4664     8714     3564     3150     6205     3072     3334
+## FBgn0000018      583      761      245      310      722      299      308
+\end{verbatim}
+
+\hypertarget{data-transformation}{%
+\subsubsection{Data Transformation}\label{data-transformation}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\FunctionTok{ggplot}\NormalTok{(rawCountTable, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ control1)) }\SpecialCharTok{+} \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#525252"}\NormalTok{, }\AttributeTok{binwidth =} \DecValTok{2000}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pseudoCount }\OtherTok{=} \FunctionTok{log2}\NormalTok{(rawCountTable }\SpecialCharTok{+} \DecValTok{1}\NormalTok{);}
+\FunctionTok{ggplot}\NormalTok{(pseudoCount, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ control1)) }\SpecialCharTok{+} \FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(log[}\DecValTok{2}\NormalTok{](count }\SpecialCharTok{+} \DecValTok{1}\NormalTok{))) }\SpecialCharTok{+}
+\FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{colour =} \StringTok{"white"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#525252"}\NormalTok{, }\AttributeTok{binwidth =} \FloatTok{0.6}\NormalTok{);}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-3-2.pdf}
+\# BOXPLOTS
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#install.packages("reshape2")}
+\FunctionTok{library}\NormalTok{(reshape2)}
+\NormalTok{  df }\OtherTok{=} \FunctionTok{melt}\NormalTok{(pseudoCount, }\AttributeTok{variable.name =} \StringTok{"Samples"}\NormalTok{);}
+\NormalTok{df }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(df, }\AttributeTok{Condition =} \FunctionTok{substr}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Samples, }\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{))}
+\CommentTok{\#str(df)}
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Samples, }\AttributeTok{y =}\NormalTok{ value, }\AttributeTok{fill =}\NormalTok{ Condition)) }\SpecialCharTok{+} \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{""}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{ylab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(log[}\DecValTok{2}\NormalTok{](count }\SpecialCharTok{+} \DecValTok{1}\NormalTok{))) }\SpecialCharTok{+} \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"\#619CFF"}\NormalTok{, }\StringTok{"\#F564E3"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\hypertarget{histogram-and-density-plot}{%
+\section{Histogram And Density Plot}\label{histogram-and-density-plot}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{colour =}\NormalTok{ Samples, }\AttributeTok{fill =}\NormalTok{ Samples)) }\SpecialCharTok{+} \FunctionTok{ylim}\NormalTok{(}\FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.25}\NormalTok{)) }\SpecialCharTok{+}
+\FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.25}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Condition) }\SpecialCharTok{+}
+\FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\FunctionTok{expression}\NormalTok{(log[}\DecValTok{2}\NormalTok{](count }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-5-1.pdf}
+\# MA-plot between Samples
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{=}\NormalTok{ pseudoCount[, }\DecValTok{1}\NormalTok{]}
+\NormalTok{y }\OtherTok{=}\NormalTok{ pseudoCount[, }\DecValTok{2}\NormalTok{]}
+\DocumentationTok{\#\# M{-}values}
+\NormalTok{M }\OtherTok{=}\NormalTok{ x }\SpecialCharTok{{-}}\NormalTok{ y}
+\DocumentationTok{\#\# A{-}values}
+\NormalTok{A }\OtherTok{=}\NormalTok{ (x }\SpecialCharTok{+}\NormalTok{ y)}\SpecialCharTok{/}\DecValTok{2}
+\NormalTok{df }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(A, M)}
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ A, }\AttributeTok{y =}\NormalTok{ M)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{size =} \FloatTok{1.5}\NormalTok{, }\AttributeTok{alpha =} \DecValTok{1}\SpecialCharTok{/}\DecValTok{5}\NormalTok{) }\SpecialCharTok{+}
+\FunctionTok{geom\_hline}\NormalTok{(}\AttributeTok{yintercept =} \DecValTok{0}\NormalTok{, }\AttributeTok{color =} \StringTok{"blue3"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{stat\_smooth}\NormalTok{(}\AttributeTok{se =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{method =} \StringTok{"loess"}\NormalTok{, }\AttributeTok{color =} \StringTok{"red3"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-6-1.pdf}
+\# Clustering Image Map(CIM) - Heatmap
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(RColorBrewer) }\CommentTok{\# this library for the brewer.pal() function}
+\CommentTok{\#BiocManager::install("ComplexHeatmap"); \#complexheatmap is not a built in library, thats why we need to install it before use.}
+\FunctionTok{library}\NormalTok{(ComplexHeatmap); }\CommentTok{\#this library is necessary for heatmap() function}
+\CommentTok{\#BiocManager::install("mixOmics")}
+
+\CommentTok{\#library(mixOmics) \#Needed for cim() function}
+
+
+\NormalTok{mat.dist }\OtherTok{=}\NormalTok{ pseudoCount;}
+\FunctionTok{colnames}\NormalTok{(mat.dist) }\OtherTok{=} \FunctionTok{paste}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(mat.dist), libType, }\AttributeTok{sep =} \StringTok{" : "}\NormalTok{);}
+\NormalTok{mat.dist }\OtherTok{=} \FunctionTok{as.matrix}\NormalTok{(}\FunctionTok{dist}\NormalTok{(}\FunctionTok{t}\NormalTok{(mat.dist)));}
+\NormalTok{mat.dist }\OtherTok{=}\NormalTok{ mat.dist}\SpecialCharTok{/}\FunctionTok{max}\NormalTok{(mat.dist);}
+\NormalTok{hmcol }\OtherTok{=} \FunctionTok{colorRampPalette}\NormalTok{(}\FunctionTok{brewer.pal}\NormalTok{(}\DecValTok{9}\NormalTok{, }\StringTok{"GnBu"}\NormalTok{))(}\DecValTok{16}\NormalTok{);}
+\CommentTok{\#cim(mat.dist, col = rev(hmcol), symkey = FALSE, margins = c(9, 9))}
+\CommentTok{\#cim() function is available in mixOmics library.}
+\FunctionTok{heatmap}\NormalTok{(mat.dist, }\AttributeTok{col =} \FunctionTok{rev}\NormalTok{(hmcol), }\AttributeTok{margins =} \FunctionTok{c}\NormalTok{(}\DecValTok{11}\NormalTok{, }\DecValTok{11}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-7-1.pdf}
+\# PCA
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(matrixStats) }\CommentTok{\# this library for rowVars() function}
+\NormalTok{pseudoCountMatrix }\OtherTok{=} \FunctionTok{as.matrix}\NormalTok{(pseudoCount);}
+\NormalTok{rv }\OtherTok{=} \FunctionTok{rowVars}\NormalTok{(pseudoCountMatrix); }\CommentTok{\# calculate variance for each row}
+\NormalTok{ntop }\OtherTok{=} \DecValTok{500}\NormalTok{;}
+\NormalTok{selectIndex }\OtherTok{=} \FunctionTok{order}\NormalTok{(rv, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{)[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntop];}
+\NormalTok{pca }\OtherTok{=} \FunctionTok{prcomp}\NormalTok{(}\FunctionTok{t}\NormalTok{(pseudoCount[selectIndex, ]));}
+\CommentTok{\#View(pca$x)}
+\FunctionTok{plot}\NormalTok{(pca}\SpecialCharTok{$}\NormalTok{x);}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-8-1.pdf}
+\# Alternative way to plot PCA with plotPCA() function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#BiocManager::install("Biobase");}
+\FunctionTok{library}\NormalTok{(Biobase); }\CommentTok{\#This library for AnnotatedDataFrame function}
+
+\NormalTok{annot }\OtherTok{=} \FunctionTok{AnnotatedDataFrame}\NormalTok{(}\AttributeTok{data =} \FunctionTok{data.frame}\NormalTok{(condition, libType,}
+\AttributeTok{row.names =} \FunctionTok{colnames}\NormalTok{(pseudoCount)));}
+
+\NormalTok{expSet }\OtherTok{=} \FunctionTok{new}\NormalTok{(}\StringTok{"ExpressionSet"}\NormalTok{, }\AttributeTok{exprs =} \FunctionTok{as.matrix}\NormalTok{(pseudoCount), }\AttributeTok{phenoData =}\NormalTok{ annot);}
+
+\FunctionTok{library}\NormalTok{(DESeq2);}
+\NormalTok{se }\OtherTok{\textless{}{-}} \FunctionTok{SummarizedExperiment}\NormalTok{(pseudoCount, }\AttributeTok{colData =}\NormalTok{ rawColData);}
+
+\CommentTok{\#BiocManager::install("BiocGenerics")}
+\CommentTok{\#library(BiocGenerics)}
+\CommentTok{\#BiocManager::install("DESeq2")}
+
+\FunctionTok{plotPCA}\NormalTok{(}\FunctionTok{DESeqTransform}\NormalTok{(se),}\AttributeTok{intgroup =} \FunctionTok{c}\NormalTok{(}\StringTok{"condition"}\NormalTok{,}\StringTok{"type"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-9-1.pdf}
+\# Multidimensional scaling plot
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x }\OtherTok{=}\NormalTok{ pseudoCount;}
+\NormalTok{s }\OtherTok{=} \FunctionTok{rowMeans}\NormalTok{((x }\SpecialCharTok{{-}} \FunctionTok{rowMeans}\NormalTok{(x))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{);}
+\CommentTok{\#View(s);}
+\NormalTok{o }\OtherTok{=} \FunctionTok{order}\NormalTok{(s, }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{);}
+\NormalTok{x }\OtherTok{=}\NormalTok{ x[o, ];}
+\NormalTok{x }\OtherTok{=}\NormalTok{ x[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{ntop, ];}
+\NormalTok{D }\OtherTok{\textless{}{-}} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{ncol}\NormalTok{(x), }\FunctionTok{ncol}\NormalTok{(x));}
+\CommentTok{\#str(x)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1} \SpecialCharTok{:} \FunctionTok{ncol}\NormalTok{(x))}
+\NormalTok{\{}
+  \ControlFlowTok{for}\NormalTok{(j }\ControlFlowTok{in} \DecValTok{1} \SpecialCharTok{:} \FunctionTok{ncol}\NormalTok{(x))}
+\NormalTok{  \{}
+\NormalTok{    tempx }\OtherTok{=}\NormalTok{ (x[, i] }\SpecialCharTok{{-}}\NormalTok{ x[, j])}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{;}
+\NormalTok{    D[i, j] }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(tempx));}
+\NormalTok{  \}}
+\NormalTok{\}}
+\NormalTok{D }\OtherTok{=} \FunctionTok{as.data.frame}\NormalTok{(D)}
+\FunctionTok{plot}\NormalTok{(D);}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#ggplot(D)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fac }\OtherTok{=} \FunctionTok{factor}\NormalTok{(}\FunctionTok{paste}\NormalTok{(condition, libType, }\AttributeTok{sep =} \StringTok{" : "}\NormalTok{))}
+
+\NormalTok{colours }\OtherTok{=} \FunctionTok{brewer.pal}\NormalTok{(}\FunctionTok{nlevels}\NormalTok{(fac), }\StringTok{"Paired"}\NormalTok{)}
+\NormalTok{colours}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "#A6CEE3" "#1F78B4" "#B2DF8A" "#33A02C"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(limma)}
+\FunctionTok{plotMDS}\NormalTok{(pseudoCount, }\AttributeTok{col =}\NormalTok{ colours[}\FunctionTok{as.numeric}\NormalTok{(fac)], }\AttributeTok{labels =}\NormalTok{ fac)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-11-1.pdf}
+\# Raw data filtering
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{keep }\OtherTok{=} \FunctionTok{rowSums}\NormalTok{(pseudoCount) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{;}
+\NormalTok{filterCount }\OtherTok{=}\NormalTok{ pseudoCount[keep, ];}
+\FunctionTok{dim}\NormalTok{(rawCountTable)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 14599     7
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{dim}\NormalTok{(filterCount)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 12359     7
+\end{verbatim}
+
+This reduces the dataset to 12359 genes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df }\OtherTok{=} \FunctionTok{melt}\NormalTok{(filterCount, }\AttributeTok{variable.name =} \StringTok{"Samples"}\NormalTok{);}
+\CommentTok{\#This is a function from the reshape2 package that is used for converting data from a wide format to a long format, which is often more suitable for various analyses and plotting.}
+\NormalTok{df }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(df, }\AttributeTok{Condition =} \FunctionTok{substr}\NormalTok{(df}\SpecialCharTok{$}\NormalTok{Samples, }\DecValTok{1}\NormalTok{, }\DecValTok{7}\NormalTok{));}
+\CommentTok{\#View(df)}
+\FunctionTok{ggplot}\NormalTok{(df, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ value, }\AttributeTok{colour =}\NormalTok{ Samples, }\AttributeTok{fill =}\NormalTok{ Samples)) }\SpecialCharTok{+}
+\FunctionTok{geom\_density}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.2}\NormalTok{, }\AttributeTok{size =} \FloatTok{1.25}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Condition) }\SpecialCharTok{+}
+\FunctionTok{theme}\NormalTok{(}\AttributeTok{legend.position =} \StringTok{"top"}\NormalTok{) }\SpecialCharTok{+} \FunctionTok{xlab}\NormalTok{(}\StringTok{"pseudocounts"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{RNA-seq-Tutorial_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\end{document}
