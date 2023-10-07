@@ -1,4 +1,0 @@
-"0","condition = c(""control"", ""control"", ""control"", ""control"", ""treated"", ""treated"", ""treated"")"
-"0","#Rename the first 4 columns"
-"0","colnames(rawCountTable)[1:4] = paste0(""control"", 1:4);"
-"0","head(rawCountTable)"
