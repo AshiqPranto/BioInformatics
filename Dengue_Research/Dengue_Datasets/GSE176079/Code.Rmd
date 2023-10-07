@@ -1,0 +1,12 @@
+```{r}
+count_matrix <- read.delim('GSE176079_normalized_gene_counts_matrix.txt')
+View(count_matrix)
+
+col_matrix <- read.delim('GSE176079_series_matrix.txt')
+View(col_matrix)
+
+library(GEOquery)
+gse <- getGEO(GEO = "GSE176079", GSEMatrix = TRUE)
+gse <- assayData(gse)
+```
+

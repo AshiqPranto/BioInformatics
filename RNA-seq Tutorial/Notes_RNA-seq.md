@@ -360,7 +360,7 @@ The two common measures used to control Type I errors are:
    This measure counts the number of times you falsely reject a true null hypothesis (Type I errors). Correcting for multiple testing involves limiting this count to a predetermined acceptable level, often denoted as "alpha" (α), which is typically set at 0.05.
 
 2. **False Discovery Proportion (FDP) Q:**
-   The FDP quantifies the proportion of false rejections among the total rejections. If you make no rejections (i.e., all p-values are not significant), the FDP is defined as 0. Otherwise, if you make some rejections (significant findings), the FDP is the ratio of the number of false rejections to the total number of rejections.
+   The FDP quantifies the proportion of false rejections among the total rejections. If you make no rejections (i.e., all p-values are not significant), the FDP is defined as 0. Otherwise, if you make some rejections (significant findings), **the FDP is the ratio of the number of false rejections to the total number of rejections.**
 
    For example, if you reject 10 null hypotheses and 2 of them are actually true (false rejections), the FDP would be 2/10 = 0.2.
 
@@ -414,3 +414,149 @@ Imagine you're using a significance level of α = 0.05 for controlling false pos
 **Conclusion**
 
 Adjusted p-values are a crucial tool in multiple hypothesis testing. They help ensure that the overall risk of false positives is controlled while guiding you in deciding which hypotheses to reject based on the strength of evidence against the null hypothesis. Adjusted p-values are used to control FWER and FDR, making them valuable in maintaining the integrity of statistical analyses in scenarios with multiple tests.
+
+
+### Identifying Differentially Expressed Genes: The Context
+
+In RNA-Seq experiments, the goal is to determine which genes are expressed at different levels in two or more conditions (e.g., control vs. treatment). Differences in gene expression can indicate the impact of a treatment or a disease condition on the organism's gene regulation.
+
+**Example: Control vs. Treatment**
+
+Let's consider an example:
+
+- **Control Condition**: You have a group of healthy individuals.
+- **Treatment Condition**: You have a group of individuals who received a new drug.
+
+You want to identify genes that are differentially expressed in response to the drug treatment. This means finding genes whose expression levels change between the control and treatment conditions.
+
+**Challenges: True Differences vs. Noise**
+
+Here's the challenge: When you measure gene expression, you'll get read counts for each gene in both conditions. These read counts can differ due to two main factors:
+
+1. **True Biological Differences**: Some genes may genuinely change their expression levels in response to the drug treatment. These differences are of scientific interest.
+
+2. **Experimental Noise**: There can be variability in the read counts due to factors like technical variability in the sequencing process, individual differences among study participants, or other sources of random variation.
+
+**Statistical Models and Tests**
+
+To distinguish between true biological differences and experimental noise, you use statistical models and tests:
+
+1. **Statistical Models**: You create a mathematical model that describes the relationship between gene expression levels and the conditions (control and treatment). This model takes into account the expected variability in read counts due to noise.
+
+2. **Hypothesis Testing**: You set up hypotheses:
+   - **Null Hypothesis (H0)**: There is no significant difference in gene expression between the control and treatment conditions (any observed differences are due to noise).
+   - **Alternative Hypothesis (HA)**: There are significant differences in gene expression between the control and treatment conditions (beyond what can be explained by noise).
+
+3. **Test Statistic**: You calculate a test statistic that quantifies how much the observed differences in read counts deviate from what would be expected under the null hypothesis.
+
+4. **P-Value**: The test statistic is used to calculate a p-value. This p-value represents the probability of observing such differences (or more extreme) if the null hypothesis were true. A small p-value suggests evidence against the null hypothesis.
+
+**Decision**: Based on the p-value and a pre-defined significance level (alpha, often 0.05), you decide whether to reject the null hypothesis or not.
+
+**Example Outcome**:
+
+- Suppose you find a gene with a very small p-value (e.g., p < 0.05). This suggests that the observed differences in read counts for this gene are unlikely to be due to noise alone.
+
+- You might conclude that this gene is differentially expressed between the control and treatment conditions, indicating a potential biological response to the drug treatment.
+
+**Conclusion**
+
+In RNA-Seq experiments comparing different conditions, statistical models and hypothesis tests are used to distinguish between true biological differences and experimental noise. These tests help identify genes that are likely to be differentially expressed, providing insights into the biological impact of the experimental conditions.
+
+#### Dispersion parameters provide information about how spread out the data points are from the central tendency, such as the mean or median.
+
+**Example: Dispersion Parameters in RNA-Seq**
+
+In the context of RNA-Seq data analysis, dispersion parameters play a key role in modeling the variability in gene expression counts. Let's use an example to illustrate the concept.
+
+Suppose you are conducting an RNA-Seq experiment to measure the expression of several genes in two groups: Control and Treatment.
+
+- For each gene, you obtain a count of how many sequencing reads mapped to that gene in both the Control and Treatment groups.
+
+Let's focus on a specific gene, Gene X:
+
+- In the Control group, Gene X has an average count (mean) of 100 reads.
+- In the Treatment group, Gene X has an average count (mean) of 150 reads.
+
+Now, the dispersion parameter (often denoted as φ) comes into play. It quantifies the degree of variability in the counts for Gene X within each group. In other words, it tells you how much the actual counts deviate from the mean.
+
+- For Gene X in the Control group, the dispersion parameter might be low (e.g., φ = 0.1). This suggests that the counts are tightly clustered around the mean of 100, indicating low variability.
+
+- For Gene X in the Treatment group, the dispersion parameter might be higher (e.g., φ = 0.3). This suggests that the counts are more spread out around the mean of 150, indicating higher variability.
+
+So, in this example, the dispersion parameters (φ) for Gene X in the Control and Treatment groups provide information about how much the counts for that gene deviate from their respective means. A lower dispersion parameter indicates less variability, while a higher dispersion parameter indicates greater variability.
+
+These dispersion parameters are essential for modeling the data accurately. In RNA-Seq data analysis, models like the negative binomial distribution or Poisson distribution with dispersion are used to account for this variability. Accurate estimation of dispersion parameters allows researchers to make more reliable inferences about differential gene expression and other aspects of the data.
+
+#### Why we need "the level of variability in gene expression counts"? What is the use of it. What we can observe from it?
+
+1. **Identifying Differentially Expressed Genes**: Dispersion estimates help identify genes that show significant changes in expression between different conditions or groups. Genes with high variability (dispersion) are more likely to be differentially expressed, and accurate dispersion estimation is essential for robust statistical tests.
+
+2. **Statistical Modeling**: Accurate dispersion estimates are used in statistical models to account for the variability in gene expression. Models that incorporate dispersion information provide more precise and reliable results, reducing the risk of false positives or false negatives in differential expression analysis.
+
+3. **Sample Size Planning**: Estimating dispersion can guide decisions about the number of replicates needed in an experiment. If the estimated dispersion is high, indicating substantial variability, you might need a larger sample size to achieve sufficient statistical power.
+
+4. **Visualization and Quality Control**: Dispersion estimates can be visualized to assess the quality of the data. Unusually high or low dispersion values for specific genes can indicate potential issues, such as outliers or artifacts in the data.
+
+5. **Gene-Specific Behavior**: Dispersion estimates can reveal gene-specific patterns of variability. Some genes may exhibit high variability, while others are more stable. Understanding these gene-specific behaviors can provide insights into the biology of the system under study.
+
+6. **Prioritizing Genes for Further Study**: Researchers may prioritize genes with high dispersion for further investigation. These genes are more likely to play important roles in biological processes, and understanding their expression patterns can be biologically informative.
+
+In summary, the level of variability in gene expression counts is a fundamental aspect of RNA-Seq data analysis. Accurate dispersion estimation helps in making meaningful biological inferences, identifying differentially expressed genes, and ensuring that statistical tests are robust and reliable. It also guides experimental design and quality control procedures in RNA-Seq experiments.
+
+### Why Size Factors Are Necessary:
+
+In RNA-Seq experiments, it's common for different samples to have varying total read counts or library sizes. Library size refers to the number of sequencing reads obtained for a sample. These differences can arise due to technical factors, such as variations in RNA quality or sequencing depth.
+
+When comparing gene expression levels across samples, it's essential to normalize the data to account for these differences. Without normalization, genes with higher read counts might appear to be more highly expressed simply because they have more reads, rather than because they are biologically more active.
+
+**Calculating Size Factors**:
+Size factors are typically calculated using one of several methods, such as the "library size" method or the "median ratio" method. The goal is to determine a scaling factor for each sample that makes the effective library sizes comparable.
+
+- **Library Size Method**: The size factor for each sample is calculated as the total number of mapped reads (or some other measure of library size) for that sample divided by a reference library size, often the median library size.
+
+- **Median Ratio Method**: The size factor for each sample is calculated as the median of the ratios of its read counts to the read counts of all other samples. This method is robust to outliers.
+
+**Example of Size Factors**:
+
+Suppose you have an RNA-Seq experiment with three samples: A, B, and C. Here are the library sizes (total read counts) for each sample:
+
+- Sample A: 1,000,000 reads
+- Sample B: 800,000 reads
+- Sample C: 1,200,000 reads
+
+To calculate size factors using the library size method:
+
+1. Calculate the median library size (the reference library size):
+   - Median Library Size = Median(1,000,000, 800,000, 1,200,000) = 1,000,000 reads
+
+2. Calculate size factors for each sample by dividing their library size by the median library size:
+   - Size Factor for Sample A = 1,000,000 / 1,000,000 = 1
+   - Size Factor for Sample B = 800,000 / 1,000,000 = 0.8
+   - Size Factor for Sample C = 1,200,000 / 1,000,000 = 1.2
+
+These size factors are applied to the raw count data for each sample to normalize the data. For example, if Sample A has a raw count of 1,000 for a gene, after normalization using the size factor of 1, the normalized count remains 1,000. For Sample B, which has a size factor of 0.8, the normalized count would be 1,000 * 0.8 = 800.
+
+Normalized data allows for accurate comparisons of gene expression levels between samples, as it accounts for differences in library size. Size factors are an essential preprocessing step in RNA-Seq data analysis, ensuring that subsequent analyses, such as differential expression analysis, are reliable and biologically meaningful.
+
+
+### Rna-Seq data
+
+These are terms related to different methods of analyzing RNA (Ribonucleic Acid) in biological research. Each method serves specific purposes and provides different types of information. Here's an explanation of each term:
+
+1. **RNA-Seq Data**:
+   - **RNA-Seq (RNA Sequencing)**: RNA-Seq is a high-throughput molecular biology technique used to analyze and quantify RNA molecules in a biological sample. It provides information about which genes are active (expressed) in a given sample, the abundance of RNA transcripts, and can help identify novel genes and isoforms.
+   - **RNA-Seq Data**: This term refers to the raw or processed data generated from an RNA-Seq experiment. It includes sequences of RNA molecules obtained from the sample and can be used for gene expression analysis, differential gene expression, and various other downstream analyses.
+
+2. **Single-Cell RNA-Seq**:
+   - **Single-Cell RNA Sequencing**: Single-cell RNA-Seq is a specialized form of RNA-Seq that allows researchers to analyze gene expression at the level of individual cells. Unlike traditional RNA-Seq, which provides an average gene expression profile for a population of cells, single-cell RNA-Seq provides insights into the heterogeneity of gene expression among individual cells within a sample. It is particularly valuable for studying complex tissues and understanding cellular diversity.
+
+3. **Bulk RNA-Seq**:
+   - **Bulk RNA Sequencing**: Bulk RNA-Seq, in contrast to single-cell RNA-Seq, analyzes RNA from a mixed population of cells. It provides an averaged gene expression profile for the entire sample. Researchers typically use bulk RNA-Seq when they are interested in understanding the overall gene expression patterns in a tissue or sample, rather than at the individual cell level.
+
+In summary:
+- **RNA-Seq Data** is the data generated from RNA sequencing experiments, which can reveal gene expression profiles.
+- **Single-Cell RNA-Seq** is a technique for analyzing gene expression at the level of individual cells, uncovering cellular heterogeneity.
+- **Bulk RNA-Seq** provides a global view of gene expression in a mixed population of cells, offering insights into overall tissue or sample gene expression patterns.
+
+Researchers choose the appropriate method based on their specific research questions and the level of resolution required for their study.

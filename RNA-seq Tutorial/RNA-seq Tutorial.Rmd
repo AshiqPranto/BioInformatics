@@ -276,8 +276,28 @@ scatter_plot <- ggplot(plotData, aes(x = GeneName, y = CountValue, color = Type)
 
 print(scatter_plot)
 ```
-
+# Estimating dispersion parameters{DESeq, DESeq2 approach}
 ```{r}
+library(DESeq2)
+dds = makeExampleDESeqDataSet()
+ddsEstimateSizeFactor = estimateSizeFactors(dds)
+#View(counts(dds))
+#View(ddsEstimateSizeFactor@colData@listData)
+
+ddsEstimateDispersions = estimateDispersions(ddsEstimateSizeFactor)
+
+plotDispEsts(ddsEstimateDispersions, ymin=0.01)
+```
+```{r}
+library(edgeR)
+set.seed(2)
+y = counts(makeExampleDESeqDataSet())
+
+dge = DGEList(y)
+dgeEstimateDispersion = estimateCommonDisp(dge)
+dgeEstimateTagWiseDispersion = estimateTagwiseDisp(dgeEstimateDispersion)
+plotBCV(dgeEstimateTagWiseDispersion, cex = 0.8)
+
 
 ```
 
