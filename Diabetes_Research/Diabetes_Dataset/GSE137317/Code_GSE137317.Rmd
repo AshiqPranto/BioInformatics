@@ -1,0 +1,19 @@
+---
+title: "Code_GSE137317"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+## Import and export counts matrix
+```{r}
+counts <- read.delim("GSE137317_read_counts.txt")
+write.csv(counts, file = "Counts_Matrix_GSE137317.csv")
+```
+## Import and export colData matrix
+```{r}
+library(GEOquery)
+colData <- getGEO(GEO = "GSE137317", GSEMatrix = TRUE)
+colData <- colData[["GSE137317_series_matrix.txt.gz"]]@phenoData@data
+write.csv(colData, file = "ColData_Matrix_GSE137317.csv")
+```
+

@@ -1,0 +1,36 @@
+---
+title: "Code_GSE193978"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+### Import countsMatrix and write it in csv format
+```{r}
+library(GEOquery)
+#countsFromGeoQuery <- getGEO(GEO = "GSE234754")
+#View(countsFromGeoQuery)
+counts53 <- read.delim("GSE193978_RAW/GSM6245953_RSEQ001.txt")
+View(counts53)
+counts54 <- read.delim("GSE193978_RAW/GSM6245954_RSEQ034.txt")
+View(counts54)
+counts55 <- read.delim("GSE193978_RAW/GSM6245955_RSEQ040.txt")
+View(counts55)
+
+# write these counts matrix in csv format
+write.csv(counts53, file = "Counts_Matrix_53.csv")
+write.csv(counts54, file = "Counts_Matrix_54.csv")
+write.csv(counts55, file = "Counts_Matrix_55.csv")
+```
+### Import Column Data
+```{r}
+colData <- getGEO(GEO  = "GSE193978", GSEMatrix = TRUE)
+colData <- colData[["GSE193978_series_matrix.txt.gz"]]@phenoData@data
+View(colData)
+write.csv(colData, file = "ColData_Matrix_GSE193978.csv")
+```
+```{r}
+countsmatrix <- read.delim("countsDataRepeat/GSE193978_TANDEM_longitudinal_paper1_rawdata.txt")
+View(countsmatrix)
+```
+
+

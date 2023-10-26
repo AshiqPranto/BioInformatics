@@ -57,6 +57,7 @@ geom_histogram(colour = "white", fill = "#525252", binwidth = 0.6);
 #install.packages("reshape2")
 library(reshape2)
   df = melt(pseudoCount, variable.name = "Samples");
+View(df)
 df = data.frame(df, Condition = substr(df$Samples, 1, 7))
 #str(df)
 ggplot(df, aes(x = Samples, y = value, fill = Condition)) + geom_boxplot() + xlab("") +

@@ -1,0 +1,195 @@
+---
+title: "Code_GSE142025"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+
+### Import export counts matrix data
+```{r}
+file_list <- list.files(path = "GSE142025_RAW/", pattern = ".txt")
+
+countsMatrix <- read.table(file = paste0("GSE142025_RAW/", file_list[1]), header = TRUE)
+for (i in 2:length(file_list)) {
+  tempCountMatrix <- read.table(file = paste0("GSE142025_RAW/", file_list[i]), header = TRUE)
+  if(all(countsMatrix$Symbol==tempCountMatrix$Symbol))
+  {
+    countsMatrix <- cbind(countsMatrix, tempCountMatrix[2])
+  }
+  else{
+    print("RowNames don't match...!")
+  }
+}
+rownames(countsMatrix) <- countsMatrix[,'Symbol']
+countsMatrix <- countsMatrix[,-1]
+View(countsMatrix)
+
+write.csv(countsMatrix, file = "CountsMatrix.csv")
+
+# after the above steps we can now import our countsmatrix from CountsMatrix.csv file directly and rename the rowNames to first columns
+countsMatrix <- read.csv("CountsMatrix.csv", header = TRUE, row.names = 1)
+#rownames(countsMatrix) <- countsMatrix[,'X']
+#countsMatrix <- countsMatrix[, -1]
+```
+
+### Download colData and export to csv file
+```{r}
+library(GEOquery)
+colData <- getGEO(GEO = "GSE142025", GSEMatrix = TRUE)
+colData <- colData[["GSE142025_series_matrix.txt.gz"]]@phenoData@data
+
+write.csv(colData, file = "ColData_Matrix_GSE142025.csv")
+```
+### Read the colData from the csv file and rename the rownames by first column
+```{r}
+colData <- read.csv(file = "ColData_Matrix_GSE142025.csv", row.names = 1)
+#rownames(colData) <- colData[, 'X']
+#colData <- colData[, -1]
+```
+
+
+## Check if all the columns name match in order with the title column of coldata matrix
+```{r}
+all(colnames(countsMatrix) == colData$title)
+colnames(countsMatrix) <- rownames(colData)
+```
+
+### Here we rename the sample name to its group
+```{r}
+Control.ColDataIndex <- grepl("Control", colData$group.ch1)
+Control.ColDataIndex
+totalControlSample <- sum(Control.ColDataIndex)
+
+Control.CountMatrix <- countsMatrix[, Control.ColDataIndex]
+colnames(Control.CountMatrix) <- paste0("control", 1:totalControlSample)
+
+colnames(countsMatrix)[Control.ColDataIndex] <- paste0("control", 1:totalControlSample)
+
+
+
+Early_DN.ColDataIndex <- grepl("Early_DN", colData$group.ch1)
+totalEarly_DNSample <- sum(Early_DN.ColDataIndex)
+totalEarly_DNSample
+rownames(colData)[Early_DN.ColDataIndex]
+colnames(countsMatrix)[Early_DN.ColDataIndex] <- paste0("early", 1:totalEarly_DNSample)
+
+
+
+Advanced_DN.ColDataIndex <- grepl("Advanced_DN", colData$group.ch1)
+totalAdvanced_DNSample <- sum(Advanced_DN.ColDataIndex)
+totalAdvanced_DNSample
+rownames(colData)[Advanced_DN.ColDataIndex]
+colnames(countsMatrix)[Advanced_DN.ColDataIndex] <- paste0("advanced", 1:totalAdvanced_DNSample)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(data = countsMatrix, aes(x = control1)) + geom_histogram(fill = "#525252", binwidth = 0.1) + labs(title = "control1")
+
+histogram_plots <- list()
+
+for (i in 1:totalControlSample) {
+  sample_name <- paste0("control", i) #Generate the column name for sample
+  sample_data <- countsMatrix[, sample_name] #Extract the sample data 
+  
+  #Creating a histogram for the current sample
+  plot <- ggplot(data = data.frame(x = sample_data), aes(x = x)) +
+    geom_histogram(fill = "#525252", binwidth = 0.1) +
+    labs(title = sample_name)
+  
+  histogram_plots[[i]] <- plot
+}
+# Display the histogram plots
+#for(i in 1:totalControlSample){
+#  print(histogram_plots[[i]])
+#}
+library(gridExtra)
+
+#Arrange the histogram plots in a 3x3 grid
+grid.arrange(histogram_plots[[1]], histogram_plots[[2]], histogram_plots[[3]], histogram_plots[[4]], histogram_plots[[5]], histogram_plots[[6]], histogram_plots[[7]], histogram_plots[[8]], histogram_plots[[9]])
+```
+```{r}
+countsMatrix_log2 <- log2(countsMatrix + 1)
+ggplot(data = countsMatrix_log2, aes(x = control1)) + geom_histogram(fill = '#525252', binwidth = 0.01) + labs(title = "control1 of log2")
+```
+
+
+```{r}
+library(reshape2)
+df <- melt(countsMatrix, variable.name = "Samples")
+df <- data.frame(df, condition = substr(df$Samples, 1, 5))
+
+ggplot(df, aes(x = Samples, y = value, fill = condition)) + geom_boxplot() 
+```
+
+
+```{r}
+ggplot(df, aes(x = value, color = Samples, fill = Samples)) + ylim(c(0, 0.25)) + geom_density(alpha = 0.2, size = 1.25)  + theme(legend.position = "right")
+``` 
+### MA - plot
+```{r}
+plot <- list()
+
+#for(i in 23 : 27)
+for(i in 2: 21)
+{
+  M = countsMatrix[, paste0('advanced',1)] - countsMatrix[, paste0('advanced', i)]
+  A = (countsMatrix[, paste0('advanced', 1)] + countsMatrix[, paste0('advanced',i)]) / 2
+  df = data.frame(A, M)
+  plot[[i-1]] <- ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) + 
+  geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3") + labs(title = paste0("advanced1 vs advanced", i))
+}
+#print(plot)
+library(gridExtra)
+grid.arrange(grobs = plot, ncol = 2)
+
+
+
+### Ma plot for control samples
+plot <- list()
+
+#for(i in 23 : 27)
+for(i in 2: 9)
+{
+  M = countsMatrix[, paste0('control',1)] - countsMatrix[, paste0('control', i)]
+  A = (countsMatrix[, paste0('control', 1)] + countsMatrix[, paste0('control',i)]) / 2
+  df = data.frame(A, M)
+  plot[[i-1]] <- ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) + 
+  geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3") + labs(title = paste0("control1 vs control", i))
+}
+#print(plot)
+library(gridExtra)
+grid.arrange(grobs = plot, ncol = 3)
+
+
+
+### Ma plot for early_DN samples
+plot <- list()
+
+#for(i in 23 : 27)
+for(i in 2: 6)
+{
+  M = countsMatrix[, paste0('early',1)] - countsMatrix[, paste0('early', i)]
+  A = (countsMatrix[, paste0('early', 1)] + countsMatrix[, paste0('early',i)]) / 2
+  df = data.frame(A, M)
+  plot[[i-1]] <- ggplot(df, aes(x = A, y = M)) + geom_point(size = 1.5, alpha = 1/5) + 
+  geom_hline(yintercept = 0, color = "blue3") + stat_smooth(se = FALSE, method = "loess", color = "red3") + labs(title = paste0("early1 vs early", i))
+}
+#print(plot)
+library(gridExtra)
+grid.arrange(grobs = plot, ncol = 3)
+```
+
+
+### Pheatmap
+```{r}
+mat.dist = countsMatrix
+mat.dist = as.matrix(dist(t(mat.dist)))
+mat.dist = mat.dist / max(mat.dist)
+heatmap(mat.dist)
+```
+
+
+

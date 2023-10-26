@@ -1,0 +1,43 @@
+---
+title: "Code_GSE234754"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+### Import and export count matrix and metadata
+```{r}
+library(GEOquery)
+#countsFromGeoQuery <- getGEO(GSEMatrix = "GSE234754")
+#BiocManager::install("rtracklayer")
+BiocManager::install("GenomicRanges")
+library(rtracklayer)
+library(GenomicRanges)
+bw_file <- import("GSE234754_RAW/GSM7474273_ab204_EndoC_CUT_RUN.monoclonal.bed.bw")
+View(bw_file@elementMetadata@listData[["score"]])
+
+# Define the genomic region of interest (change as needed)
+chromosome <- "chr1"
+start_position <- 1000000
+end_position <- 2000000
+
+# Create a GRanges object representing a region of interest
+region_of_interest <- GRanges(chromosome, IRanges(start = start_position, end = end_position))
+
+# Extract values for the specified region
+values <- coverage(bw_file, region_of_interest)
+
+values <- values(bw_file, region_of_interest)
+values <- getCoverage(bw_file, chrom = chromosome, start = start_position, end = end_position)
+region_data <- query(bw_file, seqnames = chromosome, start = start_position, end = end_position)
+
+counts <- read.delim("GSE234754_RAW/GSM7474273_ab204_EndoC_CUT_RUN.monoclonal.bed.bw")
+```
+
+### Collect metadata and store them in a csv file
+```{r}
+library(GEOquery)
+colData <- getGEO(GEO = "GSE234754", GSEMatrix = TRUE)
+colData <- colData[["GSE234754_series_matrix.txt.gz"]]@phenoData@data
+write.csv(colData, file = "ColData_GSE234754.csv")
+```
+

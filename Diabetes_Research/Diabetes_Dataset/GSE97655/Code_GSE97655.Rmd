@@ -1,0 +1,19 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+## Import export counts matrix
+```{r}
+counts <- read.delim("Diabetes_Research/Diabetes_Dataset/GSE97655/GSE97655_293alphaandbetacells.txt")
+write.csv(counts, file = "Counts_Matrix_GSE97655.csv")
+
+```
+## Import export ColData
+```{r}
+library(GEOquery)
+colData <- getGEO(GEO = "GSE97655", GSEMatrix = TRUE)
+colData <- colData[["GSE97655_series_matrix.txt.gz"]]@phenoData@data
+write.csv(colData, file = "ColData_Matrix_GSE97655.csv")
+```
+
+
