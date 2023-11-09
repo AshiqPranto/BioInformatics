@@ -1,0 +1,18 @@
+---
+title: "Code_GSE229207"
+author: "Pranto"
+date: "`r Sys.Date()`"
+output: html_document
+---
+```{r}
+countsMatrix <- read.csv("GSE229207_Group_Control-VS-Glucose_DE.csv")
+```
+
+```{r}
+library(GEOquery)
+colData <- getGEO(GEO = "GSE229207", GSEMatrix = TRUE)
+colData <- colData[["GSE229207_series_matrix.txt.gz"]]@phenoData@data
+write.csv(colData, file = "ColData_GSE229207.csv")
+```
+
+

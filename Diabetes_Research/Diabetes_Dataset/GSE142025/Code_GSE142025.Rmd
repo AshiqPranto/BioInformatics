@@ -29,9 +29,107 @@ write.csv(countsMatrix, file = "CountsMatrix.csv")
 
 # after the above steps we can now import our countsmatrix from CountsMatrix.csv file directly and rename the rowNames to first columns
 countsMatrix <- read.csv("CountsMatrix.csv", header = TRUE, row.names = 1)
+## Sort the count matrix according to the rownames
+#countsMatrix <- countsMatrix[order(rownames(countsMatrix)), ]
+
 #rownames(countsMatrix) <- countsMatrix[,'X']
 #countsMatrix <- countsMatrix[, -1]
 ```
+
+### Downloading the Ensemble Gene Id with biomaRt package
+```{r}
+#BiocManager::install("biomaRt")
+library(biomaRt)
+listEnsembl() #lists the available BioMart databases(Ensembl marts) hosted by Ensembl
+
+#To know which datasets are available within a BioMart database, first select the BioMart database using useEnsembl and then use the listDatasets function on the selected Mart object.
+selectedBioMartDBObject <- useEnsembl(biomart = "genes") #useEnsembl returns Ensembl marts type object
+
+## list the available datasets in this Mart
+datasets <- listDatasets(mart = selectedBioMartDBObject)
+listMarts()
+ensembl.connection <- useMart(biomart = 'ensembl', dataset = 'hsapiens_gene_ensembl')
+
+attributes.list <- listAttributes(ensembl.connection)
+filters.list <- listFilters(ensembl.connection)
+
+num_of_row_to_check = nrow(countsMatrix)
+countsMatrix <- head(countsMatrix, num_of_row_to_check)
+
+## Get the ENSEMBL_GENE_ID for (num_of_row_to_check) genes
+ensembl_gene_id <- getBM(attributes = c("ensembl_gene_id","external_gene_name"),
+      filters = "external_gene_name",
+      values = head(rownames(countsMatrix), num_of_row_to_check),
+      mart = ensembl.connection)
+```
+## Mapping the Ensembl gene id with gene symbol
+```{r}
+## Sort the data frame according to the column
+ensembl_gene_id <- ensembl_gene_id[order(ensembl_gene_id$external_gene_name), ]
+
+head(ensembl_gene_id)
+# it returns a logical array of duplicate gene name
+duplicated(ensembl_gene_id$external_gene_name)
+# It calculates number of duplicate row
+sum(duplicated(ensembl_gene_id$external_gene_name))
+# It shows the rownames of duplicated gene name
+rownames(ensembl_gene_id[duplicated(ensembl_gene_id$external_gene_name), ])
+## Getting genes without duplicate
+ensembl_gene_id <-  ensembl_gene_id[!duplicated(ensembl_gene_id$external_gene_name), ]
+
+rownames(head(countsMatrix, 10)) == ensembl_gene_id$external_gene_name
+
+# Finding genes those don't have Gene_Ensembl_Id
+pointer_to_count_matrix = 1
+pointer_to_ensembl_gene_name = 1
+counts_for_match_gene_id = 0
+
+## This logical vector will indicate which genes have gene ensembl id. 
+index_for_genes_those_have_gene_id <- rep(FALSE, num_of_row_to_check)
+
+for (pointer_to_count_matrix in (1:num_of_row_to_check)) {
+  if(pointer_to_ensembl_gene_name == (nrow(ensembl_gene_id) + 1))
+  {
+    break;
+  }
+  print(paste0("pcount = ", pointer_to_count_matrix," name = ", rownames(countsMatrix[pointer_to_count_matrix, ])));
+  print(paste0("pensemble = ", pointer_to_ensembl_gene_name, " name = ", ensembl_gene_id[pointer_to_ensembl_gene_name, ]$external_gene_name));
+  if(rownames(countsMatrix[pointer_to_count_matrix, ]) == ensembl_gene_id[pointer_to_ensembl_gene_name, ]$external_gene_name)
+  {
+    counts_for_match_gene_id = counts_for_match_gene_id + 1;
+    pointer_to_ensembl_gene_name = pointer_to_ensembl_gene_name + 1;
+    index_for_genes_those_have_gene_id[pointer_to_count_matrix] = TRUE;
+    print("matched")
+  }
+  else
+  {
+    #print(pointer_to_count_matrix)
+    #print(rownames(countsMatrix[pointer_to_count_matrix, ]))
+    #print(pointer_to_ensembl_gene_name)
+    #print(ensembl_gene_id[pointer_to_ensembl_gene_name, ]$external_gene_name)
+  }
+}
+# Keeping only genes those have ensembl gene id
+countsMatrix <- countsMatrix[index_for_genes_those_have_gene_id, ];
+# checking the gene orders
+all(rownames(countsMatrix) == ensembl_gene_id$external_gene_name);
+# adding ensembl_gene_id to a seperate column in countsmatrix
+countsMatrix$ensembl_gene_id = ensembl_gene_id$ensembl_gene_id;
+# check if all the countmatrix rownames equal to the ensembe_gene_id's  external_gene_name column
+all(rownames(countsMatrix) == ensembl_gene_id$external_gene_name)
+# check if all the countmatrix's ensembl_gene_id column equal to ensembe_gene_id's  ensembl_gene_id column
+all(ensembl_gene_id$ensembl_gene_id == countsMatrix$ensembl_gene_id)
+
+# Export the new countmatrix with ensembl_gene_id with name CountsMatrix_With_Ensembl_Gene_id
+write.csv(countsMatrix, file = "CountsMatrix_With_Ensembl_Gene_id.csv")
+```
+
+```{r}
+#After store the CountsMatrix_With_Ensembl_Gene_id.csv I move the gene id column to first column so that's why I have to import and check it again if the order is same as `ensembl_gene_id$ensembl_gene_id`
+countsMatrix_with_ensembl_gene_id <- read.csv("CountsMatrix_With_Ensembl_Gene_id.csv")
+all(ensembl_gene_id$ensembl_gene_id == countsMatrix_with_ensembl_gene_id$ensembl_gene_id)
+```
+
 
 ### Download colData and export to csv file
 ```{r}
